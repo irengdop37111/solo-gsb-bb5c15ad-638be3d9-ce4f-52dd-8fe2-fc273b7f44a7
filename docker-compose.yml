@@ -1,0 +1,19 @@
+services:
+  charter:
+    build: .
+    image: charter-amender:latest
+    container_name: charter-amender
+    restart: unless-stopped
+    ports:
+      - "${HOST_PORT:-3000}:3000"
+    environment:
+      # 容器内监听
+      PORT: 3000
+      HOST: 0.0.0.0
+      # SQLite 数据库文件位置（挂载到宿主机持久化）
+      DB_PATH: /data/charter.db
+    volumes:
+      - charter-data:/data
+
+volumes:
+  charter-data:
